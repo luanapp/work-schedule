@@ -1,11 +1,21 @@
-const { subMinutes, intervalToDuration } = require('date-fns');
-const { map, zipWith, props } = require('ramda');
+const { intervalToDuration, addMinutes, subMinutes } = require('date-fns');
+const { map, zipWith } = require('ramda');
 const { getParsedDate } = require('../dates');
 
 const LUNCH_LIMIT = 4;
+
+const parseExtraTime = rawTime => {
+  if (!rawTime) {
+    return 0;
+  }
+  const signal = rawTime.startsWith('-') ? -1 : 1;
+  const [hours, minutes] = rawTime.split(':');
+  return signal * (signal * hours * 60 + new Number(minutes));
+};
+
 const parseEnterRow = row => {
-  if (typeof row == Array) {
-    return subMinutes(getParsedDate(row[0]), row[2]);
+  if (typeof row !== 'string') {
+    return subMinutes(getParsedDate(row[0]), parseExtraTime(row[2]));
   }
   return getParsedDate(row);
 };

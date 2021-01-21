@@ -57,7 +57,7 @@ const writeSheetRows = ({ spreadsheetId, values, initialIndex }) => {
         resolve(
           sheets.spreadsheets.values.append({
             spreadsheetId,
-            range: 'Sheet1!A1:B2',
+            range: 'Sheet1!A2:B2',
             valueInputOption: 'USER_ENTERED',
             resource: {
               values,

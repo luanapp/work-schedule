@@ -1,7 +1,7 @@
+const { values, compose, props, map } = require('ramda');
 const { getSheetRows, writeSheetRows } = require('./worksheet/google-sheets');
 const { ENTRANCE_SHEET_ID, EXIT_SHEET_ID, BALANCE_SHEET_ID } = require('./config');
 const { getHourBalance } = require('./hour-balance');
-const { values, compose, props, map } = require('ramda');
 
 const filterProperties = map(compose(values, props(['hours', 'minutes'])));
 
