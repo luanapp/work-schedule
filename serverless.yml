@@ -6,7 +6,7 @@ plugins:
   - serverless-offline
 
 frameworkVersion: '2'
-useDotenv: true
+useDotEnv: true
 
 provider:
   name: aws
@@ -20,6 +20,8 @@ provider:
     ENTRANCE_SHEET_ID: ${env:ENTRANCE_SHEET_ID}
     EXIT_SHEET_ID: ${env:EXIT_SHEET_ID}
     BALANCE_SHEET_ID: ${env:BALANCE_SHEET_ID}
+    CREDENTIALS: ${env:CREDENTIALS}
+    TOKEN: ${env:TOKEN}
 
 functions:
   hello:

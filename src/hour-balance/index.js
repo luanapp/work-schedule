@@ -1,4 +1,4 @@
-const { intervalToDuration, addMinutes, subMinutes } = require('date-fns');
+const { intervalToDuration, format, subMinutes } = require('date-fns');
 const { map, zipWith } = require('ramda');
 const { getParsedDate } = require('../dates');
 
@@ -21,11 +21,15 @@ const parseEnterRow = row => {
 };
 
 const updateHours = ({ hours }) => (hours > LUNCH_LIMIT ? hours - 9 : hours - 8);
-const getRowDuration = (enterDate, exitDate) =>
-  intervalToDuration({
-    start: parseEnterRow(enterDate),
+const getRowDuration = (enterDate, exitDate) => {
+  const start = parseEnterRow(enterDate);
+  const interval = intervalToDuration({
+    start,
     end: getParsedDate(exitDate),
   });
+  const date = format(start, 'dd/MM/yyyy');
+  return { ...interval, date };
+};
 
 const subtractWorkHours = workHours => {
   return map(item => ({ ...item, ...{ hours: updateHours(item) } }), workHours);
