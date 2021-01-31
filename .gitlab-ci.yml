@@ -21,7 +21,8 @@ build:
 deploy-dev:
   stage: deploy
   script: yarn deploy
-  except: master
+  except:
+    - master
   cache:
     <<: *cache
     policy: pull
@@ -29,7 +30,9 @@ deploy-dev:
 deploy-prod:
   stage: deploy
   script: yarn deploy
-  only: master
+  only:
+    - master
+  when: manual
   cache:
     <<: *cache
     policy: pull
