@@ -1,0 +1,22 @@
+version: 2.1
+
+
+build:
+  docker:
+    - image: circleci/node:12.14.1
+  working_directory: ~/repo
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+    - run: sudo npm i -g serverless yarn
+    - run: yarn
+    - run: sls deploy --stage dev
+    - save_cache:
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
