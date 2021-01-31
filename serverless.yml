@@ -28,4 +28,4 @@ functions:
     handler: src/handler.makeWorkSchedule
     events:
       - schedule: rate(1 minutes)
-      # - schedule: cron(* 1 ? * MON-FRI *)
+      # - schedule: cron(* 1 ? * SAT *)

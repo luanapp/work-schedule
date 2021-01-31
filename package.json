@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node src/handler.js",
     "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline -s dev",
+    "deploy-dev": "serverless --stage dev",
+    "deploy": "serverless --stage prod",
     "test": "jest"
   },
   "keywords": [

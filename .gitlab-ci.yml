@@ -1,0 +1,35 @@
+default:
+  image: node:latest
+
+.cache: &cache
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+  policy: pull-push
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script: yarn
+  cache:
+    <<: *cache
+    policy: push
+
+deploy-dev:
+  stage: deploy
+  script: yarn deploy
+  except: master
+  cache:
+    <<: *cache
+    policy: pull
+
+deploy-prod:
+  stage: deploy
+  script: yarn deploy
+  only: master
+  cache:
+    <<: *cache
+    policy: pull
