@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/handler.js",
     "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline -s dev",
-    "deploy-dev": "serverless --stage dev",
-    "deploy": "serverless --stage prod",
+    "deploy-dev": "serverless deploy --stage dev",
+    "deploy": "serverless deploy --stage prod",
     "test": "jest"
   },
   "keywords": [
@@ -29,7 +29,7 @@
   "devDependencies": {
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.1.0",
-    "jest": "^25.2.4",
+    "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "serverless": "^2.17.0",
     "serverless-offline": "^6.1.2"
