@@ -6,7 +6,6 @@ plugins:
   - serverless-offline
 
 frameworkVersion: '2'
-useDotEnv: true
 
 provider:
   name: aws
