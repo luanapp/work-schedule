@@ -5,16 +5,16 @@ orbs:
   aws-cli: circleci/aws-cli@1.3.2
   node: circleci/node@4.1.0
 
-only-master: &only-master
+only-main: &only-main
   filters:
     branches:
       only:
-        - master
-ignore-master: &ignore-master
+        - main
+ignore-main: &ignore-main
   filters:
     branches:
       ignore:
-        - master
+        - main
 
 jobs:
   build:
@@ -55,7 +55,7 @@ workflows:
   deploy-dev:
     jobs:
       - build:
-        <<: *ignore-master
+        <<: *ignore-main
       - test:
           requires:
             - build
@@ -70,7 +70,7 @@ workflows:
   deploy-prod:
     jobs:
       - build:
-          <<: *only-master
+          <<: *only-main
       - test:
           requires:
             - build
