@@ -1,36 +1,36 @@
 version: 2.1
 
+orbs:
+  serverless: circleci/serverless-framework@1.0.1
+  aws-cli: circleci/aws-cli@1.3.2
+  node: circleci/node@4.1.0
+
 jobs:
-  build:
+  deploy-dev:
+    executor: serverless/default
     docker:
       - image: circleci/node:12.14.1
-    working_directory: ~/repo
     parameters:
       stage:
         type: string
         default: dev
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: sudo npm i -g serverless
-      - run: yarn
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - serverless/setup:
+          app-name: personal-stuff
+          org-name: luanapp
       - run: echo $CREDENTIALS | base64 --decode > credentials.json
       - run: echo $TOKEN | base64 --decode > token.json
       - run: sls deploy --stage << parameters.stage >>
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
 
 workflows:
   version: 2.1
   deploy-dev:
     jobs:
-      - build:
+      - deploy-dev:
           stage: dev
           filters:
             branches:
