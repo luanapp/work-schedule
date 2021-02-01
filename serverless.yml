@@ -24,5 +24,5 @@ functions:
   hello:
     handler: src/handler.makeWorkSchedule
     events:
-      - schedule: rate(1 minutes)
+      - schedule: rate(1 minute)
       # - schedule: cron(* 1 ? * SAT *)
