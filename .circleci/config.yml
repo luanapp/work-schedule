@@ -6,7 +6,7 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
-  deploy-dev:
+  deploy:
     executor: serverless/default
     docker:
       - image: circleci/node:12.14.1
@@ -24,13 +24,13 @@ jobs:
           org-name: luanapp
       - run: echo $CREDENTIALS | base64 --decode > credentials.json
       - run: echo $TOKEN | base64 --decode > token.json
-      - run: sls deploy --stage << parameters.stage >>
+      - run: sls deploy -v --stage << parameters.stage >>
 
 workflows:
   version: 2.1
   deploy-dev:
     jobs:
-      - deploy-dev:
+      - deploy:
           stage: dev
           filters:
             branches:
