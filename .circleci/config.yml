@@ -34,10 +34,13 @@ workflows:
     jobs:
       - build
       - node/test
+      - hold:
+          type: approval
+          requires:
+            - node/test
       - deploy:
           stage: dev
           requires:
-            - build
             - hold
           filters:
             branches:
@@ -49,7 +52,8 @@ workflows:
       - node/test
       - deploy:
           stage: prod
-          requires: build
+          requires:
+            - build
           filters:
             branches:
               only:
