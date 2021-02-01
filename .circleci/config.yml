@@ -6,19 +6,21 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
-  deploy:
-    executor: serverless/default
+  build:
     docker:
       - image: circleci/node:12.14.1
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+  deploy:
+    executor: serverless/default
     parameters:
       stage:
         type: string
         default: dev
     steps:
       - checkout
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
       - serverless/setup:
           app-name: personal-stuff
           org-name: luanapp
@@ -30,9 +32,25 @@ workflows:
   version: 2.1
   deploy-dev:
     jobs:
+      - build
+      - node/test
       - deploy:
           stage: dev
+          requires:
+            - build
+            - hold
           filters:
             branches:
               ignore:
+                - master
+  deploy-prod:
+    jobs:
+      - build
+      - node/test
+      - deploy:
+          stage: prod
+          requires: build
+          filters:
+            branches:
+              only:
                 - master
