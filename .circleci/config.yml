@@ -49,7 +49,8 @@ workflows:
   deploy-prod:
     jobs:
       - build
-      - node/test
+      - node/test:
+          pkg-manager: yarn
       - deploy:
           stage: prod
           requires:
