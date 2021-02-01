@@ -21,7 +21,7 @@ provider:
     BALANCE_SHEET_ID: ${env:BALANCE_SHEET_ID}
 
 functions:
-  hello:
+  calculate-balance:
     handler: src/handler.makeWorkSchedule
     events:
       - schedule: cron(* 1 ? * SAT *)

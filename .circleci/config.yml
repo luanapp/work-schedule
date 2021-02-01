@@ -5,6 +5,15 @@ orbs:
   aws-cli: circleci/aws-cli@1.3.2
   node: circleci/node@4.1.0
 
+node-executor: &node-executor
+  executor:
+    name: node/default
+    tag: '12'
+
+node-image: &node-image
+  docker:
+    - image: circleci/node:12.14.1
+
 yarn-install: &yarn-install
   node/install-packages:
     pkg-manager: yarn
@@ -21,20 +30,22 @@ ignore-main: &ignore-main
         - main
 
 jobs:
+  build:
+    <<: *node-executor
+    <<: *node-image
+    steps:
+      - checkout
+      - <<: *yarn-install
   test:
-    executor:
-      name: node/default
-      tag: '12'
-    docker:
-      - image: circleci/node:12.14.1
+    <<: *node-executor
+    <<: *node-image
     steps:
       - checkout
       - <<: *yarn-install
       - run: yarn test
   deploy:
     executor: serverless/default
-    docker:
-      - image: circleci/node:12.14.1
+    <<: *node-image
     parameters:
       stage:
         type: string
@@ -53,21 +64,27 @@ workflows:
   version: 2.1
   deploy-dev:
     jobs:
-      - test:
+      - build:
           <<: *ignore-main
+      - test:
+          requires:
+            - build
+      - deploy:
+          stage: dev
+          requires:
+            - build
+  deploy-prod:
+    jobs:
+      - build:
+          <<: *only-main
+      - test:
+          requires:
+            - build
       - hold:
           type: approval
           requires:
             - test
       - deploy:
-          stage: dev
-          requires:
-            - hold
-  deploy-prod:
-    jobs:
-      - test:
-          <<: *only-main
-      - deploy:
           stage: prod
           requires:
-            - test
+            - hold
