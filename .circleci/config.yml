@@ -18,8 +18,18 @@ jobs:
             - v1-dependencies-
       - run: sudo npm i -g serverless
       - run: yarn
-      - run: echo $CREDENTIALS | base64 --decode > credentials.json
-      - run: echo $TOKEN | base64 --decode > token.json
+      - run:
+          name: Build credentials file
+          command: |
+            echo "These are the credentials: $CREDENTIALS"
+            echo $CREDENTIALS > credentials.json.base64
+            base64 --decode credentials.json.base64 > credentials.json
+      - run:
+          name: Build token file
+          command: |
+            echo "These are the token: $CREDENTIALS"
+            echo $TOKEN > token.json.base64
+            base64 --decode token.json.base64 > token.json
       - run: sls deploy --stage << parameters.stage >>
       - save_cache:
           paths:
