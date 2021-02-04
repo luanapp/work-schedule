@@ -18,7 +18,7 @@
   "author": "Luana Pimentel",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "aws-sdk": "^2.646.0",
+    "aws-sdk": "^2.836.0",
     "date-fns": "^2.16.1",
     "fs": "0.0.1-security",
     "googleapis": "^66.0.0",
