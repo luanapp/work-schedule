@@ -19,7 +19,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "aws-sdk": "^2.646.0",
-    "date-fns": "^2.16.1",
+    "date-fns": "^2.17.0",
     "fs": "0.0.1-security",
     "googleapis": "^66.0.0",
     "jimp": "^0.16.1",
