@@ -49,15 +49,16 @@ const getWorkSheetValues = (err, res) => {
  * @param {Array} values values to be appended to the spreadsheet
  */
 const writeSheetRows = ({ spreadsheetId, values, initialIndex }) => {
-  const range = `Sheet1!A${initialIndex}C${initialIndex + values.length}`;
+  const range = `Sheet1!A${initialIndex}:C${initialIndex + values.length}`;
+
   return new Promise((resolve, reject) => {
     try {
       loadAuth(async auth => {
         const sheets = google.sheets({ version: 'v4', auth });
         resolve(
-          sheets.spreadsheets.values.append({
+          sheets.spreadsheets.values.update({
             spreadsheetId,
-            range: 'Sheet1!A2:C2',
+            range,
             valueInputOption: 'USER_ENTERED',
             resource: {
               values,
