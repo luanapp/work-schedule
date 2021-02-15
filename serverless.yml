@@ -24,5 +24,5 @@ functions:
   calculate-balance:
     handler: src/handler.makeWorkSchedule
     events:
-      - schedule: cron(0 4 ? * MON,SAT *)
-      # - schedule: rate(1 minute)
+      # - schedule: cron(0 4 ? * SAT *)
+      - schedule: rate(3 minute)
