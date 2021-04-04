@@ -56,8 +56,6 @@ jobs:
       - serverless/setup:
           app-name: personal-stuff
           org-name: luanapp
-      - run: echo $CREDENTIALS
-      - run: echo $TOKEN
       - run: echo $CREDENTIALS | base64 --decode > credentials.json
       - run: echo $TOKEN | base64 --decode > token.json
       - run: sls deploy -v --stage << parameters.stage >>
