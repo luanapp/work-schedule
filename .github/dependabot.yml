@@ -9,9 +9,9 @@ updates:
     allow:
       - dependency-type: all
     assignees:
-      - TODXS/turing-backend
+      - luanapp
     reviewers:
-      - TODXS/turing-backend
+      - luanapp
     commit-message:
       # Prefix all commit messages to comply with semantic commits
       prefix: 'chore(dependabot): '
