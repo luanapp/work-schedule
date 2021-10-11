@@ -1,10 +1,20 @@
 version: 2
 updates:
-- package-ecosystem: github-actions
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "08:00"
-  open-pull-requests-limit: 10
-  labels:
-  - dependabot
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '08:00'
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: all
+    assignees:
+      - TODXS/turing-backend
+    reviewers:
+      - TODXS/turing-backend
+    commit-message:
+      # Prefix all commit messages to comply with semantic commits
+      prefix: 'chore(dependabot): '
+    labels:
+      - dependabot
+      - dependencies
