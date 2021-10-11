@@ -69,10 +69,10 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
-          stage: dev
-          requires:
-            - build
+      #- deploy:
+      #    stage: dev
+      #    requires:
+      #      - build
   deploy-prod:
     jobs:
       - build:
@@ -84,7 +84,7 @@ workflows:
           type: approval
           requires:
             - test
-      - deploy:
-          stage: prod
-          requires:
-            - hold
+      #- deploy:
+      #    stage: prod
+      #    requires:
+      #      - hold

@@ -8,7 +8,8 @@
     "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline -s dev",
     "deploy-dev": "serverless deploy --stage dev",
     "deploy": "serverless deploy --stage prod",
-    "test": "jest"
+    "test": "jest",
+    "commit": "git cz"
   },
   "keywords": [
     "aws",
@@ -19,6 +20,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "aws-sdk": "^2.646.0",
+    "commitizen": "^4.2.4",
     "date-fns": "^2.17.0",
     "fs": "0.0.1-security",
     "googleapis": "^67.0.0",
