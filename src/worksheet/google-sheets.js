@@ -49,7 +49,7 @@ const getWorkSheetValues = (err, res) => {
  * @param {Array} values values to be appended to the spreadsheet
  */
 const writeSheetRows = ({ spreadsheetId, values, initialIndex }) => {
-  const range = `Sheet1!A${initialIndex}:C${initialIndex + values.length}`;
+  const range = `Sheet1!A${initialIndex}:D${initialIndex + values.length}`;
 
   return new Promise((resolve, reject) => {
     try {

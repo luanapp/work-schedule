@@ -3,7 +3,7 @@ const { getSheetRows, writeSheetRows } = require('./worksheet/google-sheets');
 const { ENTRANCE_SHEET_ID, EXIT_SHEET_ID, BALANCE_SHEET_ID } = require('./config');
 const { getHourBalance } = require('./hour-balance');
 
-const filterProperties = map(compose(values, props(['date', 'hours', 'minutes'])));
+const filterProperties = map(compose(values, props(['date', 'hours', 'minutes', 'isNegative'])));
 
 const makeWorkSchedule = async event => {
   const processedRows = await getSheetRows(BALANCE_SHEET_ID, 'Sheet1!A1:A');

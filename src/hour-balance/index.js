@@ -1,5 +1,5 @@
-const { intervalToDuration, format, subMinutes } = require('date-fns');
-const { map, zipWith } = require('ramda');
+const { intervalToDuration, format, subMinutes, addHours, differenceInHours, isAfter } = require('date-fns');
+const { zipWith } = require('ramda');
 const { getParsedDate } = require('../dates');
 
 const LUNCH_LIMIT = 4;
@@ -20,21 +20,18 @@ const parseEnterRow = row => {
   return getParsedDate(row);
 };
 
-const updateHours = ({ hours }) => (hours > LUNCH_LIMIT ? hours - 9 : hours - 8);
 const getRowDuration = (enterDate, exitDate) => {
   const start = parseEnterRow(enterDate);
+  const end = getParsedDate(exitDate);
+  const hours = differenceInHours(end, start);
   const interval = intervalToDuration({
-    start,
-    end: getParsedDate(exitDate),
+    start: addHours(start, hours > LUNCH_LIMIT ? 9 : 8),
+    end,
   });
   const date = format(start, 'dd/MM/yyyy');
-  return { ...interval, date };
+  return { ...interval, date, isNegative: isAfter(addHours(start, hours > LUNCH_LIMIT ? 9 : 8), end) };
 };
 
-const subtractWorkHours = workHours => {
-  return map(item => ({ ...item, ...{ hours: updateHours(item) } }), workHours);
-};
-
-const getHourBalance = (enterRows, exitRows) => subtractWorkHours(zipWith(getRowDuration, enterRows, exitRows));
+const getHourBalance = (enterRows, exitRows) => zipWith(getRowDuration, enterRows, exitRows);
 
 module.exports = { getHourBalance };
