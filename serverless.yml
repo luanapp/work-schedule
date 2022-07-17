@@ -7,6 +7,14 @@ plugins:
 
 frameworkVersion: '3'
 
+package:
+  patterns:
+    - src/**
+    - package.json
+    - yarn.lock
+    - '!node_modules/**'
+    - '!.git'
+
 provider:
   name: aws
   runtime: nodejs14.x
